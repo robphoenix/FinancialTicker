@@ -1,0 +1,17 @@
+{
+    "name": "financialtickergrid",
+    "description": "A financials ticker grid",
+    "author": "Rob Phoenix",
+    "scripts": {
+        "build": "tsc -p .",
+        "watch": "tsc --watch -p .",
+        "lint": "tslint -c tslint.json './src/*.ts'",
+        "format": "prettier --config .prettierrc --write \"./src/*.ts\"",
+        "serve": "npm run build && node server.js"
+    },
+    "devDependencies": {
+        "prettier": "^1.13.5",
+        "tslint": "^5.10.0",
+        "typescript": "^2.9.2"
+    }
+}
