@@ -2,16 +2,13 @@ class Model {
     public headers: string[];
     public stocks: IStock[];
 
-    private snapshot: string;
-
     constructor() {
-        this.snapshot = "./data/snapshot.csv";
         this.headers = [];
         this.stocks = [];
     }
 
-    public async load() {
-        const res = await fetch(this.snapshot);
+    public async load(snapshotFile: string) {
+        const res = await fetch(snapshotFile);
         const data = await res.text();
         await this.parseCSV(data);
     }

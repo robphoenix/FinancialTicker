@@ -1,4 +1,5 @@
 interface IStock {
+    [key: string]: any;
     name: string;
     companyName: string;
     price: number;

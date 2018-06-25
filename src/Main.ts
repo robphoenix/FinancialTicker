@@ -1,6 +1,6 @@
 window.onload = () => {
     (async function() {
-        const model = new Model();
-        await model.load();
+        const grid = new Grid();
+        await grid.render();
     })();
 };
