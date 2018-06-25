@@ -1,4 +1,6 @@
 window.onload = () => {
-    const model = new Model();
-    model.load("./data/snapshot.csv");
+    (async function() {
+        const model = new Model();
+        await model.load();
+    })();
 };
