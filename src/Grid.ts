@@ -1,36 +1,42 @@
 class Grid {
-    private snapshot: string;
+    private deltas: number[];
+    private model: Model;
+    private table: HTMLTableElement;
+    private thead: HTMLTableSectionElement;
+    private tbody: HTMLTableSectionElement;
+    private headerRow: HTMLTableRowElement;
 
     constructor() {
-        this.snapshot = "./data/snapshot.csv";
+        this.deltas = [];
+        this.model = new Model();
+        this.table = document.getElementById("ticker-grid") as HTMLTableElement;
+        this.thead = this.table.createTHead();
+        this.tbody = this.table.createTBody();
+        this.headerRow = this.thead.insertRow(0);
     }
 
     public async render() {
-        const model: Model = new Model();
-        await model.load(this.snapshot);
+        await this.model.load();
 
-        const table: HTMLTableElement = document.getElementById(
-            "ticker-grid",
-        ) as HTMLTableElement;
+        this.deltas = this.model.deltas;
 
-        const thead: HTMLTableSectionElement = table.createTHead();
-        const rowHead: HTMLTableRowElement = thead.insertRow(0);
-        model.headers.map((header, i) => {
-            const cell: HTMLTableDataCellElement = rowHead.insertCell(i);
+        this.model.headers.map((header, i) => {
+            const cell: HTMLTableDataCellElement = this.headerRow.insertCell(i);
             cell.className = "grid__thead";
             cell.innerHTML = header;
         });
 
-        const tbody: HTMLTableSectionElement = table.createTBody();
-        tbody.className = "grid__tbody";
-        model.stocks.map((stock, i) => {
-            const rowBody: HTMLTableRowElement = tbody.insertRow(i);
+        this.tbody.className = "grid__tbody";
+
+        this.model.stocks.map((stock, i) => {
+            const row: HTMLTableRowElement = this.tbody.insertRow(i);
             if (i % 2 === 0) {
-                rowBody.className = "grid__row--even ";
+                row.className = "grid__row--even ";
             }
-            rowBody.className += "grid__row";
+            row.className += "grid__row";
+
             Object.keys(stock).map((key, j) => {
-                const cell: HTMLTableDataCellElement = rowBody.insertCell(j);
+                const cell: HTMLTableDataCellElement = row.insertCell(j);
                 cell.innerHTML = stock[key];
                 if (key === "name") {
                     cell.className += "grid__cell--name ";
