@@ -8,7 +8,6 @@ body {
 .header__title {
     color: #0b0014;
     font-size: 40px;
-    /* font-family: system; */
     font-style: normal;
     width: 700px;
     margin: 0 auto;
@@ -18,20 +17,25 @@ body {
 }
 
 .grid {
-    color: #0b0014;
-    /* font-family: system; */
-    /* font-style: normal; */
-    width: 700px;
+    width: 710px;
     margin: 0 auto;
     padding: 10px;
-    border-spacing: 5px;
+    border-bottom: 2px solid #d44d5c;
+}
+
+.grid__table {
+    color: #0b0014;
+    width: 100%;
+    /* margin: 15px 0; */
+    padding: 10px;
+    border-spacing: 4px;
 }
 
 .grid__thead {
     font-size: 25px;
     color: #773344;
-    border-bottom: 1px solid #0b0014;
-    padding: 8px;
+    border-bottom: 1px solid #773344;
+    padding-bottom: 8px;
     text-align: center;
 }
 
@@ -52,4 +56,22 @@ body {
 
 .grid__cell--name {
     font-weight: bold;
+    width: 10%;
+}
+
+.grid__cell--companyName {
+    width: 30%;
+}
+
+.grid__cell--price,
+.grid__cell--marketCap {
+    width: 15%;
+}
+
+.grid__cell--change {
+    width: 10%;
+}
+
+.grid__cell--changePercent {
+    width: 20%;
 }

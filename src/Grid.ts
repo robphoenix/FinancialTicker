@@ -29,7 +29,7 @@ class Grid {
         this.tbody.className = `grid__tbody`;
         this.model.stocks.map((stock, i) => {
             const row: HTMLTableRowElement = this.tbody.insertRow(i);
-            if (i % 2 === 0) {
+            if ((i + 1) % 2 === 0) {
                 row.className = `grid__row--even `;
             }
             row.className += `grid__row`;
@@ -39,10 +39,7 @@ class Grid {
                 const cell: HTMLTableDataCellElement = row.insertCell(j);
                 cell.innerHTML = stock[key];
                 cell.id = `${stock.name}-${key}`;
-                if (key === `name`) {
-                    cell.className += `grid__cell--name `;
-                }
-                cell.className += `grid__cell`;
+                cell.className += `grid__cell grid__cell--${key}`;
             });
         });
     }
