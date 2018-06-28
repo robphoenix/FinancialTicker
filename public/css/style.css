@@ -60,7 +60,7 @@ body {
 
 .cell__price,
 .cell__marketCap {
-    width: 15%;
+    width: 17%;
 }
 
 .cell__change {
@@ -68,7 +68,7 @@ body {
 }
 
 .cell__companyName {
-    width: 30%;
+    width: 28%;
 }
 
 .cell__changePercent {

@@ -83,9 +83,7 @@ class Model {
         let currentDelta: number = 0;
         for (const update of this.updates) {
             const [, , price, change, changePercent] = update;
-            if (price === ``) {
-                this.grid!.updateStock(undefined);
-            } else {
+            if (price !== ``) {
                 const stock = new Stock({
                     change: +change,
                     changePercent,
@@ -103,17 +101,16 @@ class Model {
                 currentDelta++;
             }
         }
-
-        setTimeout(() => {
-            this.stocks.map((stock: IStock) => {
-                this.grid!.updateStock(stock);
-            });
-        }, 1500);
-
+        // go back to the beginning and repeat
+        await this.sleep(2000);
+        this.stocks.map((stock: IStock) => {
+            this.grid!.updateStock(stock);
+        });
+        await this.sleep(1500);
         this.updateStocks();
     }
 
-    private sleep(ms: number) {
+    private sleep(ms: number): Promise<{}> {
         return new Promise((resolve) => setTimeout(resolve, ms));
     }
 }
