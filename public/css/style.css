@@ -26,7 +26,6 @@ body {
 .grid__table {
     color: #0b0014;
     width: 100%;
-    /* margin: 15px 0; */
     padding: 10px;
     border-spacing: 4px;
 }
@@ -50,28 +49,140 @@ body {
 }
 
 .grid__cell {
-    padding: 8px;
     text-align: center;
+    padding: 6px 0;
 }
 
-.grid__cell--name {
+.cell__name {
     font-weight: bold;
     width: 10%;
 }
 
-.grid__cell--companyName {
-    width: 30%;
-}
-
-.grid__cell--price,
-.grid__cell--marketCap {
+.cell__price,
+.cell__marketCap {
     width: 15%;
 }
 
-.grid__cell--change {
+.cell__change {
     width: 10%;
 }
 
-.grid__cell--changePercent {
+.cell__companyName {
+    width: 30%;
+}
+
+.cell__changePercent {
     width: 20%;
+}
+
+.cell--inc {
+    -webkit-animation: inc 0.75s ease-in-out;
+    -moz-animation: inc 0.75s ease-in-out;
+    -o-animation: inc 0.75s ease-in-out;
+    animation: inc 0.75s ease-in-out;
+}
+
+.cell--dec {
+    -webkit-animation: dec 0.75s ease-in-out;
+    -moz-animation: dec 0.75s ease-in-out;
+    -o-animation: dec 0.75s ease-in-out;
+    animation: dec 0.75s ease-in-out;
+}
+
+@-webkit-keyframes inc {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #a2ad91;
+        color: #f5e9e2;
+    }
+    100% {
+        background-color: none;
+    }
+}
+@-moz-keyframes inc {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #a2ad91;
+        color: #f5e9e2;
+    }
+    100% {
+        background-color: none;
+    }
+}
+@-o-keyframes inc {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #a2ad91;
+        color: #f5e9e2;
+    }
+    100% {
+        background-color: none;
+    }
+}
+@keyframes inc {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #a2ad91;
+        color: #f5e9e2;
+    }
+    100% {
+        background-color: none;
+    }
+}
+
+@-webkit-keyframes dec {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #d44d5c;
+        color: #f5e9e2;
+    }
+    100% {
+        background-color: none;
+    }
+}
+@-moz-keyframes dec {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #d44d5c;
+        color: #f5e9e2;
+    }
+    100% {
+        background-color: none;
+    }
+}
+@-o-keyframes dec {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #d44d5c;
+        color: #f5e9e2;
+    }
+    100% {
+        background-color: none;
+    }
+}
+@keyframes dec {
+    0% {
+        background-color: none;
+    }
+    50% {
+        background-color: #d44d5c;
+        color: #f5e9e2;
+    }
+    100% {
+        background-color: none;
+    }
 }
