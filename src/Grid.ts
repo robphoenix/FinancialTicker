@@ -72,13 +72,20 @@ class Grid {
         cells.push(changePercentCell!);
         changePercentCell!.innerHTML = `${update.changePercent}`;
 
-        let [addClass, removeClass] = [`inc`, `dec`];
-        if (update.price < this.history[update.name]) {
-            [addClass, removeClass] = [removeClass, addClass];
-        }
+        // set the css classes for the relevant visual flare
         cells.map((cell: Element) => {
-            cell!.classList.remove(`cell--${removeClass}`);
-            cell!.classList.add(`cell--${addClass}`);
+            if (update.price < this.history[update.name]) {
+                cell!.classList.remove(`cell--inc`);
+                cell!.classList.add(`cell--dec`);
+            }
+            if (update.price > this.history[update.name]) {
+                cell!.classList.remove(`cell--dec`);
+                cell!.classList.add(`cell--inc`);
+            }
+            if (update.price === this.history[update.name]) {
+                cell!.classList.remove(`cell--dec`);
+                cell!.classList.remove(`cell--inc`);
+            }
         });
 
         this.history[update.name] = update.price;
