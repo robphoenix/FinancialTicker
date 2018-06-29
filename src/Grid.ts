@@ -39,7 +39,7 @@ class Grid {
 
             Object.keys(stock).map((key: string, j: number) => {
                 const cell: HTMLTableDataCellElement = row.insertCell(j);
-                cell.innerHTML = stock[key];
+                cell.innerHTML = `${stock[key]}`;
                 cell.id = `${stock.name}-${key}`;
                 cell.className += `grid__cell cell__${key}`;
             });
@@ -47,6 +47,9 @@ class Grid {
     }
 
     public async updateStock(update: IStock) {
+        if (update.price === 0) {
+            return;
+        }
         const currentRow: HTMLElement = document.getElementById(update.name)!;
         const updatedRow: HTMLElement = currentRow;
         const cells: Element[] = [];

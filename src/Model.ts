@@ -5,19 +5,15 @@ class Model {
 
     private grid: Grid | undefined;
     private companies: string[];
-    private updates: string[][];
-
     private snapshotFile: string;
     private deltasFile: string;
 
     constructor() {
         this.headers = [];
         this.stocks = [];
-        this.deltas = [];
+        this.deltas = [2000];
         this.companies = [];
-        this.updates = [];
         this.grid = undefined;
-
         this.snapshotFile = `./data/snapshot.csv`;
         this.deltasFile = `./data/deltas.csv`;
     }
@@ -31,13 +27,9 @@ class Model {
         const snapshot = await resSnapshot.text();
         await this.parseSnapshot(snapshot);
 
-        const resDeltas = await fetch(this.deltasFile);
-        const deltas = await resDeltas.text();
-        await this.parseDeltas(deltas);
-
-        setTimeout(() => {
-            this.updateStocks();
-        }, 2000);
+        fetch(this.deltasFile)
+            .then((res) => res.text())
+            .then((deltas) => this.parseDeltas(deltas));
     }
 
     private parseSnapshot(text: string) {
@@ -66,47 +58,63 @@ class Model {
         });
     }
 
-    private parseDeltas(text: string) {
+    private async parseDeltas(text: string) {
         const lines: string[][] = text
             .split(`\n`)
             .map((line) => line.split(`,`));
 
-        this.deltas = lines
+        // pull out the deltas
+        lines
             .filter((line: string[]) => line.length === 1 && line[0] !== ``)
-            .map((delta: string[]) => Number(delta[0]));
+            .map((delta: string[]) => this.deltas.push(Number(delta[0])));
 
-        this.updates = lines.filter((line: string[]) => line.length > 1);
-    }
+        // pause before starting updates
+        await this.sleep(1500);
 
-    private async updateStocks() {
-        let currentCompany: number = 0;
-        let currentDelta: number = 0;
-        for (const update of this.updates) {
+        // pull out the stock updates
+        const updates = lines.filter((line: string[]) => line.length > 1);
+        // ignore the first value currently in this.deltas
+        // it's there for the initial snapshot data
+        let [currentCompany, currentDelta] = [0, 1];
+        // add updates to existing data, updating the grid as we go
+        for (const update of updates) {
             const [, , price, change, changePercent] = update;
-            if (price !== ``) {
-                const stock = new Stock({
-                    change: +change,
-                    changePercent,
-                    companyName: ``,
-                    marketCap: ``,
-                    name: this.companies[currentCompany],
-                    price: +price,
-                });
-                this.grid!.updateStock(stock);
-            }
+            const stock = new Stock({
+                change: +change,
+                changePercent,
+                companyName: ``,
+                marketCap: ``,
+                name: this.companies[currentCompany],
+                price: +price,
+            });
+
+            this.stocks.push(stock);
+            this.grid!.updateStock(stock);
+
             currentCompany++;
-            if (currentCompany === 10) {
+            // pause before next set of updates
+            if (currentCompany === this.companies.length) {
                 currentCompany = 0;
                 await this.sleep(this.deltas[currentDelta]);
                 currentDelta++;
             }
         }
-        // go back to the beginning and repeat
-        await this.sleep(2000);
-        this.stocks.map((stock: IStock) => {
+        // restart updating with complete set of stock data
+        this.updateStocks();
+    }
+
+    private async updateStocks() {
+        let [currentCompany, currentDelta] = [0, 0];
+        for (const stock of this.stocks) {
             this.grid!.updateStock(stock);
-        });
-        await this.sleep(1500);
+            currentCompany++;
+            if (currentCompany === this.companies.length) {
+                currentCompany = 0;
+                await this.sleep(this.deltas[currentDelta]);
+                currentDelta++;
+            }
+        }
+        // let's take it back to the start
         this.updateStocks();
     }
 

@@ -1,5 +1,5 @@
 interface IStock {
-    [key: string]: any;
+    [key: string]: string | number;
     name: string;
     companyName: string;
     price: number;
@@ -9,6 +9,8 @@ interface IStock {
 }
 
 class Stock implements IStock {
+    [key: string]: string | number;
+
     public name: string;
     public companyName: string;
     public price: number;
