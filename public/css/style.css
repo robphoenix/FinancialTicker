@@ -31,10 +31,10 @@ body {
 }
 
 .grid__thead {
-    font-size: 25px;
+    font-size: 22px;
     color: #773344;
     border-bottom: 1px solid #773344;
-    padding-bottom: 8px;
+    padding: 0 5px 8px 5px;
     text-align: center;
 }
 
