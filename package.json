@@ -6,7 +6,7 @@
         "build": "tsc -p .",
         "watch": "tsc --watch -p .",
         "lint": "tslint -c tslint.json './src/*.ts'",
-        "format": "prettier --config .prettierrc --write \"./src/*.ts\"",
+        "format": "prettier --config .prettierrc --write \"./src/*.ts\" \"./public/css/style.css\"",
         "serve": "npm run build && node server.js"
     },
     "devDependencies": {

@@ -40,8 +40,9 @@ class Grid {
             Object.keys(stock).map((key: string, j: number) => {
                 const cell: HTMLTableDataCellElement = row.insertCell(j);
                 cell.innerHTML = `${stock[key]}`;
-                cell.id = `${stock.name}-${key}`;
-                cell.className += `grid__cell cell__${key}`;
+                cell.className += `grid__cell cell__${key} ${
+                    stock.name
+                }-${key}`;
             });
         });
     }
@@ -55,19 +56,19 @@ class Grid {
         const cells: Element[] = [];
 
         const priceCell: Element | null = updatedRow.querySelector(
-            `#${update.name}-price`,
+            `.${update.name}-price`,
         );
         cells.push(priceCell!);
         priceCell!.innerHTML = `${update.price}`;
 
         const changeCell: Element | null = updatedRow.querySelector(
-            `#${update.name}-change`,
+            `.${update.name}-change`,
         );
         cells.push(changeCell!);
         changeCell!.innerHTML = `${update.change}`;
 
         const changePercentCell: Element | null = updatedRow.querySelector(
-            `#${update.name}-changePercent`,
+            `.${update.name}-changePercent`,
         );
         cells.push(changePercentCell!);
         changePercentCell!.innerHTML = `${update.changePercent}`;
